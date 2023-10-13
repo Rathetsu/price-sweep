@@ -13,7 +13,7 @@ const SearchBar: React.FC<SearchBarProps> = () => {
       <input
         type="text"
         className="searchbar-input"
-        placeholder="ُEnter product link"
+        placeholder="Enter product link"
       />
       <button
         type="submit"

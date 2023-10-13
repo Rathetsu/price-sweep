@@ -2,15 +2,18 @@ import React from "react";
 import Image from "next/image";
 import Searchbar from "../components/SearchBar";
 import Hero from "../components/Hero";
+import { Inter, Space_Grotesk } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 const Home = () => {
   return (
     <>
-      <section className="px-6 md:px-20 py-24 border-2 border-primary">
+      <section className="px-6 md:px-20 py-24">
         <div className="flex max-xl:flex-col gap-16">
           <div className="flex flex-col justify-center">
             <p className="small-text">
-              Smart Shopping Starts here <br />
+              Smart Shopping Starts here
               <Image
                 src="/assets/icons/arrow-right.svg"
                 width={20}
@@ -21,7 +24,7 @@ const Home = () => {
 
             <h1 className="head-text">
               Unleash the Power of <br />
-              <span className="text-primary">Price Sweep</span>
+              <span className={`${inter.className} text-primary`}>Price Sweep</span>
             </h1>
             <p className="mt-6">
               Powerful, self-serve product matching and price monitoring
