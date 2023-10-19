@@ -26,8 +26,9 @@ export async function scrapeAmazonProduct(url: string) {
 
 		// Extract product data
 		const title = $("#productTitle").text().trim();
-		const currentPrice = extractPrice($);
-		console.log({ title, currentPrice });
+		const prices = extractPrice($);
+		console.log('original price', prices.originalPrice);
+		console.log('current price', prices.currentPrice);
 
 		
 	} catch (e: any) {
