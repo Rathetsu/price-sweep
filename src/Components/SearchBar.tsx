@@ -60,7 +60,7 @@ const SearchBar: React.FC<SearchBarProps> = () => {
 			<input
 				type="text"
 				className="searchbar-input"
-				placeholder="Enter an Amazon product link"
+				placeholder="Paste Amazon product link here..."
 				value={searchQuery}
 				onChange={(e) => setSearchQuery(e.target.value)}
 			/>

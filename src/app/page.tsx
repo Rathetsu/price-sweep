@@ -23,11 +23,11 @@ const Home = () => {
             </p>
 
             <h1 className="head-text">
-              Unleash the Power of <br />
               <span className={`${inter.className} text-primary`}>Price Sweep</span>
+			  <br /> Track, Compare & Save on Your Favorite Products!
             </h1>
             <p className="mt-6">
-              Powerful, self-serve product matching and price monitoring
+			Paste a product link and instantly find the best deals and comparisons.
             </p>
 
             <Searchbar />
