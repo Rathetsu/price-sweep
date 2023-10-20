@@ -26,21 +26,42 @@ export async function scrapeAmazonProduct(url: string) {
 
 		// Extract product data
 		const title = $("#productTitle").text().trim();
-		const currency = $(".a-price-symbol:first").text().trim();
-		const prices = extractPrice($);
+		const priceDetails = extractPrice($);
 		const isOutOfStock: boolean =
 			$(
 				"#availability .a-size-medium.a-color-success:contains('Currently unavailable.')"
 			).length > 0;
-		console.log("title", title);
-		console.log("original price", prices.originalPrice);
-		console.log("current price", prices.currentPrice);
-		console.log("currency", currency);
-		console.log("is out of stock", isOutOfStock);
-
-		// Extract image data
+		const discountRate = $(
+			".a-size-large.savingPriceOverride.reinventPriceSavingsPercentageMargin.savingsPercentage"
+		)
+			.text()
+			.trim();
 		const extractedImages = extractImages($);
-		console.log("Extracted images:", extractedImages);
+
+		// construct data object with scraped data
+		const data = {
+			url,
+			title,
+			category: "",
+			reviewsCount: 0,
+			rating: 0,
+			description: "",
+			currency: priceDetails.productCurrency,
+			isOutOfStock,
+			discountRate: Number(discountRate),
+			mainImage: extractedImages[0],
+			images: extractedImages,
+			priceHistory: [],
+			originalPrice: priceDetails.originalPrice ? Number(priceDetails.originalPrice) : null,
+			currentPrice: priceDetails.isRange ? null : Number(priceDetails.currentPrice),
+			startPrice: priceDetails.isRange ? Number(priceDetails.startPrice) : null,
+			endPrice: priceDetails.isRange ? Number(priceDetails.endPrice) : null,
+		};
+
+		console.log('Scraped Amazon product data:', data);
+
+		return data;
+
 	} catch (e: any) {
 		throw new Error(`Failed to scrape product: ${e.message}`);
 	}

@@ -3,7 +3,6 @@
 import { scrapeAmazonProduct } from "../scraper";
 
 export async function scrapeAndStoreProduct(productUrl: string) {
-	console.log("scrapeAndStoreProduct", productUrl);
 	if (!productUrl) return;
 	try {
 		const scrapedProduct = await scrapeAmazonProduct(productUrl);

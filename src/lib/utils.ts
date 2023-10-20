@@ -1,30 +1,57 @@
 interface PriceDetails {
+	isRange: boolean;
+	startPrice: string | null;
+	endPrice: string | null;
 	originalPrice: string | null;
-	currentPrice: string;
+	currentPrice: string | null;
+	productCurrency: string;
 }
 
 export function extractPrice($: any): PriceDetails {
-	const productCurrency = $(".a-price-symbol:first").text().trim();
+	const isRange = $(".a-price-range").length > 0;
 
-	// Original Price
-	const originalAmount = $(
-		".a-price.a-text-price:first span[aria-hidden='true']"
-	)
-		.text()
-		.trim()
-		.replace(productCurrency, "");
-	
-	const originalPriceText = originalAmount ? `${originalAmount}` : null;
+	let originalPriceText = null;
+	let currentPriceText = null;
+	let productCurrency = "";
+	let startPrice = null;
+	let endPrice = null;
 
+	if (isRange) {
+		const offscreenPrices = $(".a-price-range span.a-offscreen");
+		if (offscreenPrices.length >= 2) {
+			const firstPriceText = $(offscreenPrices[0]).text().trim();
+			const secondPriceText = $(offscreenPrices[1]).text().trim();
+			productCurrency = firstPriceText.replace(/[0-9.,]/g, "");
+			startPrice = firstPriceText.replace(productCurrency, "");
+			endPrice = secondPriceText.replace(productCurrency, "");
+			currentPriceText = `${startPrice} - ${endPrice}`;
+		}
+	} else {
+		productCurrency = $(".a-price-symbol:first").text().trim();
+		const originalAmount = $(
+			".a-price.a-text-price:first span[aria-hidden='true']"
+		)
+			.text()
+			.trim()
+			.replace(productCurrency, ""); // remove currency symbol from original price if it exists
 
-	// Current Price
-	const priceWhole = $(".a-price-whole:first").text().trim().replace(".", ""); // remove decimal dot from whole price if it exists
-	const priceFraction = $(".a-price-fraction:first").text().trim();
-	const currentPriceText = `${priceWhole}.${priceFraction}`;
+		originalPriceText = originalAmount ? `${originalAmount}` : null;
+
+		const priceWhole = $(".a-price-whole:first")
+			.text()
+			.trim()
+			.replace(".", ""); // remove decimal dot from whole price if it exists
+		const priceFraction = $(".a-price-fraction:first").text().trim();
+		currentPriceText = `${priceWhole}.${priceFraction}`;
+	}
 
 	return {
+		isRange,
+		startPrice,
+		endPrice,
 		originalPrice: originalPriceText,
 		currentPrice: currentPriceText,
+		productCurrency,
 	};
 }
 
