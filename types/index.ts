@@ -1,0 +1,20 @@
+export type Product = {
+	_id?: string;
+	users?: User[];
+	url: string;
+	currency: string;
+	image: string;
+	title: string;
+	description: string;
+	category: string;
+	reviewsCount: number;
+	rating: number;
+	isOutOfStock: Boolean;
+	currentPrice: number;
+	originalPrice: number;
+	discountRate: number;
+	priceHistory: PriceHistoryItem[] | [];
+	highestPrice: number;
+	lowestPrice: number;
+	averagePrice: number;
+};
