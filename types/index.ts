@@ -12,6 +12,9 @@ export type Product = {
 	isOutOfStock: Boolean;
 	currentPrice: number;
 	originalPrice: number;
+	isRange: Boolean;
+	priceRangeStart: number | null;
+	priceRangeEnd: number | null;
 	discountRate: number;
 	priceHistory: PriceHistoryItem[] | [];
 	highestPrice: number;

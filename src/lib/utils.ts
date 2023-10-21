@@ -1,7 +1,7 @@
 interface PriceDetails {
 	isRange: boolean;
-	startPrice: string | null;
-	endPrice: string | null;
+	priceRangeStart: string | null;
+	priceRangeEnd: string | null;
 	originalPrice: string | null;
 	currentPrice: string | null;
 	productCurrency: string;
@@ -13,8 +13,8 @@ export function extractPrice($: any): PriceDetails {
 	let originalPriceText = null;
 	let currentPriceText = null;
 	let productCurrency = "";
-	let startPrice = null;
-	let endPrice = null;
+	let priceRangeStart = null;
+	let priceRangeEnd = null;
 
 	if (isRange) {
 		const offscreenPrices = $(".a-price-range span.a-offscreen");
@@ -22,9 +22,9 @@ export function extractPrice($: any): PriceDetails {
 			const firstPriceText = $(offscreenPrices[0]).text().trim();
 			const secondPriceText = $(offscreenPrices[1]).text().trim();
 			productCurrency = firstPriceText.replace(/[0-9.,]/g, "");
-			startPrice = firstPriceText.replace(productCurrency, "");
-			endPrice = secondPriceText.replace(productCurrency, "");
-			currentPriceText = `${startPrice} - ${endPrice}`;
+			priceRangeStart = firstPriceText.replace(productCurrency, "");
+			priceRangeEnd = secondPriceText.replace(productCurrency, "");
+			currentPriceText = `${priceRangeStart} - ${priceRangeEnd}`;
 		}
 	} else {
 		productCurrency = $(".a-price-symbol:first").text().trim();
@@ -47,8 +47,8 @@ export function extractPrice($: any): PriceDetails {
 
 	return {
 		isRange,
-		startPrice,
-		endPrice,
+		priceRangeStart,
+		priceRangeEnd,
 		originalPrice: originalPriceText,
 		currentPrice: currentPriceText,
 		productCurrency,

@@ -35,7 +35,9 @@ export async function scrapeAmazonProduct(url: string) {
 			".a-size-large.savingPriceOverride.reinventPriceSavingsPercentageMargin.savingsPercentage"
 		)
 			.text()
-			.trim();
+			.trim()
+			.replace("-", "")
+			.replace("%", "");
 		const extractedImages = extractImages($);
 
 		// construct data object with scraped data
@@ -52,16 +54,35 @@ export async function scrapeAmazonProduct(url: string) {
 			mainImage: extractedImages[0],
 			images: extractedImages,
 			priceHistory: [],
-			originalPrice: priceDetails.originalPrice ? Number(priceDetails.originalPrice) : null,
-			currentPrice: priceDetails.isRange ? null : Number(priceDetails.currentPrice),
-			startPrice: priceDetails.isRange ? Number(priceDetails.startPrice) : null,
-			endPrice: priceDetails.isRange ? Number(priceDetails.endPrice) : null,
+			originalPrice: priceDetails.originalPrice
+				? Number(priceDetails.originalPrice)
+				: null,
+			currentPrice: priceDetails.isRange
+				? null
+				: Number(priceDetails.currentPrice),
+			isRange: priceDetails.isRange,
+			priceRangeStart: priceDetails.isRange
+				? Number(priceDetails.priceRangeStart)
+				: null,
+			priceRangeEnd: priceDetails.isRange
+				? Number(priceDetails.priceRangeEnd)
+				: null,
+			lowestPrice: priceDetails.isRange
+				? null
+				: Number(priceDetails.currentPrice),
+			highestPrice: !priceDetails.isRange
+				? priceDetails.originalPrice
+					? Number(priceDetails.originalPrice)
+					: Number(priceDetails.currentPrice)
+				: null,
+			averagePrice: !priceDetails.isRange
+				? Number(priceDetails.currentPrice)
+				: null,
 		};
 
-		console.log('Scraped Amazon product data:', data);
+		console.log("Scraped Amazon product data:", data);
 
 		return data;
-
 	} catch (e: any) {
 		throw new Error(`Failed to scrape product: ${e.message}`);
 	}
