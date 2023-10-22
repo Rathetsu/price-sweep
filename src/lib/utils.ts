@@ -92,3 +92,18 @@ export function extractImages($: any): string[] {
 
 	return extractedImages;
 }
+
+export function getLowestPrice(priceHistory: any[]): number {
+	const prices = priceHistory.map((price: any) => price.price);
+	return Math.min(...prices);
+}
+
+export function getHighestPrice(priceHistory: any[]): number {
+	const prices = priceHistory.map((price: any) => price.price);
+	return Math.max(...prices);
+}
+
+export function getAveragePrice(priceHistory: any[]): number {
+	const prices = priceHistory.map((price: any) => price.price);
+	return prices.reduce((a, b) => a + b, 0) / prices.length;
+}
