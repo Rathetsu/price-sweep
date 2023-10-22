@@ -1,13 +1,19 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { scrapeAmazonProduct } from "../scraper";
 import { connectToDB } from "../mongoose";
+import { Product } from "../models/product.model";
+import { getAveragePrice, getHighestPrice, getLowestPrice } from "../utils";
 
 export async function scrapeAndStoreProduct(productUrl: string) {
 	if (!productUrl) return;
 	try {
+		await connectToDB();
+
 		const scrapedProduct = await scrapeAmazonProduct(productUrl);
 
 		if (!scrapedProduct) {
@@ -35,11 +41,37 @@ export async function scrapeAndStoreProduct(productUrl: string) {
 			return;
 		}
 
-		try {
-			connectToDB();
-		} catch (e: any) {
-			throw new Error(`Failed to connect to database: ${e.message}`);
+		let product = scrapedProduct;
+
+		const existingProduct = await Product.findOne({
+			url: scrapedProduct.url,
+		});
+
+		if (existingProduct) {
+			const updatedPriceHistory: any = [
+				...existingProduct.priceHistory,
+				{
+					price: scrapedProduct.currentPrice,
+					date: new Date(),
+				},
+			];
+
+			product = {
+				...scrapedProduct,
+				priceHistory: updatedPriceHistory,
+				lowestPrice: getLowestPrice(updatedPriceHistory),
+				highestPrice: getHighestPrice(updatedPriceHistory),
+				averagePrice: getAveragePrice(updatedPriceHistory),
+			};
 		}
+
+		const newProduct = await Product.findOneAndUpdate(
+			{ url: scrapedProduct.url },
+			product,
+			{ upsert: true, new: true }
+		);
+
+		revalidatePath(`/product/${newProduct._id}`);
 	} catch (e: any) {
 		console.log(e);
 		throw new Error(`Failed to create/update product: ${e.message}`);
