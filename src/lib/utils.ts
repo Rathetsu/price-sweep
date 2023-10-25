@@ -45,6 +45,11 @@ export function extractPrice($: any): PriceDetails {
 		currentPriceText = `${priceWhole}.${priceFraction}`;
 	}
 
+	// clean up commas from price strings
+	if (originalPriceText) originalPriceText = originalPriceText.replace(",", "");
+	if (currentPriceText) currentPriceText = currentPriceText.replace(",", "");
+
+
 	return {
 		isRange,
 		priceRangeStart,

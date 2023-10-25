@@ -5,6 +5,9 @@ import { extractPrice, extractImages } from "../utils";
 export async function scrapeAmazonProduct(url: string) {
 	if (!url) return;
 
+	// Add language variable to the URL to ensure it's in English (Works for Amazon Egypt only at the moment)
+	url = url.includes("language=en_AE") ? url : `${url}&language=en_AE`;
+
 	// BrightData proxy configuration
 	const username = String(process.env.BRIGHT_DATA_USERNAME);
 	const password = String(process.env.BRIGHT_DATA_PASSWORD);

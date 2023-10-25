@@ -19,7 +19,3 @@ export const connectToDB = async () => {
 	}
 
 };
-
-
-// ezzat
-// gWTHBjfnjS35R6rt
