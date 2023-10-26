@@ -4,6 +4,7 @@ import { Product } from "@/types";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import PriceInfoCard from "@/src/components/PriceInfoCard";
 
 type Props = {
     params: {
@@ -93,46 +94,86 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                             ) : null}
                         </div>
 
-						<div className='flex flex-col gap-4'>
-							<div className="flex gap-3">
-								<div className='product-rating'>
-									<Image
-										src="/assets/icons/star.svg"
-										alt="star"
-										width={16}
-										height={16}
-									/>
-									<p className='text-sm text-primary-pink font-semibold'>
-										{product.rating}
-									</p>
-								</div>
+                        <div className="flex flex-col gap-4">
+                            <div className="flex gap-3">
+                                <div className="product-rating">
+                                    <Image
+                                        src="/assets/icons/star.svg"
+                                        alt="star"
+                                        width={16}
+                                        height={16}
+                                    />
+                                    <p className="text-sm text-primary-pink font-semibold">
+                                        {product.rating}
+                                    </p>
+                                </div>
 
-								<div className='product-reviews'>
-									<Image
-										src="/assets/icons/comment.svg"
-										alt="comment"
-										width={16}
-										height={16}
-									/>
-									<p className='text-sm text-secondary font-semibold'>
-										{product.reviewsCount}{" "} Reviews
-									</p>
-								</div>
-							</div>
+                                <div className="product-reviews">
+                                    <Image
+                                        src="/assets/icons/comment.svg"
+                                        alt="comment"
+                                        width={16}
+                                        height={16}
+                                    />
+                                    <p className="text-sm text-secondary font-semibold">
+                                        {product.reviewsCount} Reviews
+                                    </p>
+                                </div>
+                            </div>
 
-							<p className='text-sm text-black opacity-50'>
-								<span className='text-primary-green font-semibold'>
-									93%
-								</span> of buyers enjoyed this product!
-							</p>
-						</div>
+                            <p className="text-sm text-black opacity-50">
+                                <span className="text-primary-green font-semibold">
+                                    93%
+                                </span>{" "}
+                                of buyers enjoyed this product!
+                            </p>
+                        </div>
                     </div>
 
-					<div className='my-7 gap-5 flex flex-col'>
-						<div className='flex flex-wrap gap-5'>
-							
-						</div>
-					</div>
+                    <div className="my-7 gap-5 flex flex-col">
+                        <div className="flex flex-wrap gap-5">
+                            <PriceInfoCard
+                                title="Current Price"
+                                iconSrc="/assets/icons/price-tag.svg"
+                                value={`${
+                                    product.currency
+                                } ${formatNumberWithCommas(
+                                    product.currentPrice
+                                )}`}
+                                borderColor="#B6BBFF"
+                            />
+                            <PriceInfoCard
+                                title="Averag Price"
+                                iconSrc="/assets/icons/chart.svg"
+                                value={`${
+                                    product.currency
+                                } ${formatNumberWithCommas(
+                                    product.averagePrice
+                                )}`}
+                                borderColor="#FFC300"
+                            />{" "}
+                            <PriceInfoCard
+                                title="Highest Price"
+                                iconSrc="/assets/icons/arrow-up.svg"
+                                value={`${
+                                    product.currency
+                                } ${formatNumberWithCommas(
+                                    product.highestPrice
+                                )}`}
+                                borderColor="#FF5733"
+                            />{" "}
+                            <PriceInfoCard
+                                title="Lowest Price"
+                                iconSrc="/assets/icons/arrow-down.svg"
+                                value={`${
+                                    product.currency
+                                } ${formatNumberWithCommas(
+                                    product.lowestPrice
+                                )}`}
+                                borderColor="#BEFFC5"
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
