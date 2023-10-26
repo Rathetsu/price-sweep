@@ -98,6 +98,10 @@ export function extractImages($: any): string[] {
 	return extractedImages;
 }
 
+export function formatNumberWithCommas(n: number): string {
+	return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 export function getLowestPrice(priceHistory: any[]): number {
 	const prices = priceHistory.map((price: any) => price.price);
 	return Math.min(...prices);
