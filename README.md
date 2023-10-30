@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Price Sweep
 
+Price Sweep is a web application designed to help you find the best deals and stay updated on price changes for products you're interested in. By simply pasting links from Amazon and Noon, Price Sweep will compare the prices, track them, and notify you about price changes through email notifications.
+
+![Price Sweep Interface](https://i.imgur.com/mDZtoz4.png)
+
+## Features
+
+- **Price Tracking**: Paste the link of the product you want to track, and Price Sweep will keep an eye on its price for you.
+- **Price Comparison**: Compare prices of the same product across Amazon and Noon to ensure you're getting the best deal.
+- **Email Notifications**: Receive email notifications whenever the price of a tracked product changes.
+- **Simple User Interface**: An easy-to-use interface designed to provide the best user experience.
+
+## Technologies Used
+
+- **[Next.js](https://nextjs.org/)**
+- **[React.js](https://reactjs.org/)**
+- **[MongoDB](https://www.mongodb.com/)**
+- **[Bright Data's API](https://brightdata.com/)**
 ## Getting Started
 
-First, run the development server:
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/your-username/price-sweep.git
+   cd price-sweep
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Setup Environment Variables**
+   
+   Create a `.env` file in the root directory and add the following:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```
+	BRIGHT_DATA_USERNAME=your bright data username
+	BRIGHT_DATA_PASSWORD=your bright data password
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+	MONGODB_URI=your mongodb uri
+   ```
 
-## Learn More
+4. **Run the Application**
+   ```bash
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+Visit `http://localhost:3000` in your browser and enjoy the application.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Future Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Price History Visualization**: Allow users to view the historical price changes of a product in graphical form.
+- **Support for More E-commerce Platforms**: Expand our supported platforms beyond just Amazon and Noon.
+- **User Profiles**: Let users have their own profiles, save multiple products, and customize their notification preferences.
 
-## Deploy on Vercel
+## Feedback
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+If you find any bugs or have suggestions for improvement, please open an issue in this repository.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
